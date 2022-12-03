@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import styled from 'styled-components'
 import { useLandingStore } from '../stores/landing'
+import { useLoadingStore } from '../stores/loading'
 
 const Container = styled(motion.div)`
   position: absolute;
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
   gap: 12px;
 `
 
-const CTAButtonContainer = styled(motion.button)`
+const CTAButtonContainer = styled(motion.a)`
   padding: 22px 72px;
   background: linear-gradient(
     266.42deg,
@@ -53,24 +54,26 @@ const navVariants = {
   initial: {
     bottom: -150,
     transition: {
-      delay: 0.2,
+      duration: 0.35,
     },
   },
   animate: {
     bottom: 40,
     transition: {
-      delay: 0.2,
+      duration: 0.75,
+      delay: 0.25,
     },
   },
 }
 
 const NavigationBar = () => {
+  const isLoaded = useLoadingStore((state) => state.isLoaded)
   const [isOpenMenu, setIsOpenMenu] = useLandingStore((state) => [state.isOpenMenu, state.setIsOpenMenu])
 
   return (
-    <Container initial='initial' animate={!isOpenMenu ? 'animate' : 'initial'} variants={navVariants}>
+    <Container initial='initial' animate={!isOpenMenu && isLoaded ? 'animate' : 'initial'} variants={navVariants}>
       <Wrapper>
-        <CTAButtonContainer whileHover={{ scale: 0.95 }}>
+        <CTAButtonContainer whileHover={{ scale: 0.95 }} href='http://city.merse.fun'>
           <ButtonText textColor='#fff'>Hop into Merse City</ButtonText>
         </CTAButtonContainer>
         <NormalButton>

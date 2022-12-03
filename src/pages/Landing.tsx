@@ -1,10 +1,11 @@
 import { OrthographicCamera, softShadows } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { AnimatePresence } from 'framer-motion'
-import React, { FC, lazy, Suspense } from 'react'
+import React, { FC, lazy, Suspense, useLayoutEffect } from 'react'
 import styled from 'styled-components'
 import { Character } from '../components/Character'
 import NavigationBar from '../components/NavigationBar'
+import { useLoadingStore } from '../stores/loading'
 import Loading from './Loading'
 
 const Header: FC = lazy(() => import('../layout/LandingHeader'))
@@ -40,24 +41,32 @@ const CanvasContainer = styled.div`
 softShadows()
 
 const Landing: FC = () => {
+  const isLoaded = useLoadingStore((state) => state.isLoaded)
+
   return (
     <Container>
-      <Suspense fallback={null}>
-        <Header />
-        <SideMenu />
-      </Suspense>
-      <SectionContainer>
-        <AnimatePresence>
-          <Logo />
-        </AnimatePresence>
-        <Description />
-        <CanvasContainer>
-          <Canvas>
-            <Scene />
-          </Canvas>
-        </CanvasContainer>
-      </SectionContainer>
-      <NavigationBar />
+      {/* {isLoaded ? ( */}
+      <>
+        <Suspense fallback={null}>
+          <Header />
+          <SideMenu />
+        </Suspense>
+        <SectionContainer>
+          <AnimatePresence>
+            <Logo />
+          </AnimatePresence>
+          <Description />
+          <CanvasContainer>
+            <Canvas>
+              <Scene />
+            </Canvas>
+          </CanvasContainer>
+        </SectionContainer>
+        <NavigationBar />
+      </>
+      {/* // ) : (
+      //   <Loading />
+      // )} */}
     </Container>
   )
 }

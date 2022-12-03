@@ -92,3 +92,12 @@ button {
   border: none;
   cursor: var(--cursor-pointer);
 }
+
+#gradient-canvas {
+  width: 100%;
+  height: 100%;
+  --gradient-color-1: #fe6860;
+  --gradient-color-2: #fe8a71;
+  --gradient-color-3: #d9bbae;
+  --gradient-color-4: #f3c9bf;
+}

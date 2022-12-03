@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
 import styled from 'styled-components'
+import { useLoadingStore } from '../stores/loading'
 
 const Container = styled(motion.div)`
   position: absolute;
@@ -24,7 +25,8 @@ const logoContainerVariants = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
+      delayChildren: 0.5,
     },
   },
 }
@@ -36,15 +38,17 @@ const characterVariants = {
   animate: {
     y: 0,
     transition: {
-      duration: 1,
+      duration: 1.15,
     },
   },
 }
 
 const LandingLogoText = () => {
+  const isLoaded = useLoadingStore((state) => state.isLoaded)
+
   return (
     <Container>
-      <Wrapper variants={logoContainerVariants} initial='initial' animate='animate'>
+      <Wrapper variants={logoContainerVariants} initial='initial' animate={isLoaded && 'animate'}>
         <Characters variants={characterVariants}>M</Characters>
         <Characters variants={characterVariants}>E</Characters>
         <Characters variants={characterVariants}>R</Characters>

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 
-const v = new THREE.Vector3(1, -1.35, 0)
+const v = new THREE.Vector3(1, -1.45 + window.innerHeight / 7000, 0)
 const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -0.4, 0))
 
 export const Character = () => {
@@ -45,8 +45,8 @@ export const Character = () => {
   }, [animations])
 
   useFrame(() => {
-    group.current.position.lerp(v, 0.05)
-    group.current.quaternion.rotateTowards(q, 0.04)
+    group.current.position.lerp(v, 0.03)
+    group.current.quaternion.slerp(q, 0.03)
   })
 
   return (
